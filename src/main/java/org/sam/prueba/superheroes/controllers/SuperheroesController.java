@@ -34,6 +34,7 @@ public class SuperheroesController {
 
     @GetMapping(value = "/", produces = "application/json" )
     @ApiOperation(value = "Consultar todos los súper héroes.")
+    @LogearTiempoEjecucion
     public ResponseEntity<List<Superheroe>> findAll() {
         List<Superheroe> list = service.findAll();
         if(list != null && !list.isEmpty()){
