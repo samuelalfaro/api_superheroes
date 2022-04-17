@@ -59,11 +59,8 @@ public class SuperheroesServiceTest {
     public void testFindAll() {
         System.out.println("findAll");
         SuperheroesService instance = buildService();
-        List<Superheroe> expResult = null;
         List<Superheroe> result = instance.findAll();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(!result.isEmpty());
     }
 
     /**
@@ -77,8 +74,10 @@ public class SuperheroesServiceTest {
         Superheroe expResult = null;
         Superheroe result = instance.find(heroeId);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        heroeId = 11L;
+        result = instance.find(heroeId);
+        assertTrue(result != null);
     }
 
     /**
@@ -87,13 +86,10 @@ public class SuperheroesServiceTest {
     @Test
     public void testFindByName() {
         System.out.println("findByName");
-        String name = "";
+        String name = "OC";
         SuperheroesService instance = buildService();
-        List<Superheroe> expResult = null;
         List<Superheroe> result = instance.findByName(name);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(!result.isEmpty());
     }
 
     /**
@@ -102,13 +98,11 @@ public class SuperheroesServiceTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Superheroe heroe = null;
+        Superheroe heroe = new Superheroe( 11L, "Repetido");
         SuperheroesService instance = buildService();
         boolean expResult = false;
         boolean result = instance.create(heroe);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -117,13 +111,11 @@ public class SuperheroesServiceTest {
     @Test
     public void testUpdate() {
         System.out.println("update");
-        Superheroe heroe = null;
+        Superheroe heroe = new Superheroe( 11L, "Repetido");
         SuperheroesService instance = buildService();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.update(heroe);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -137,8 +129,6 @@ public class SuperheroesServiceTest {
         boolean expResult = false;
         boolean result = instance.delete(heroeId);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
