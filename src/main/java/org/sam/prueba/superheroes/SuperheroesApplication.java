@@ -2,6 +2,7 @@ package org.sam.prueba.superheroes;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 @Import({org.sam.prueba.common.config.SpringAspectConfig.class
         ,org.sam.prueba.common.exceptions.ExceptionHelper.class})
+@EnableCaching
 @Configuration
 public class SuperheroesApplication implements WebMvcConfigurer {
 
