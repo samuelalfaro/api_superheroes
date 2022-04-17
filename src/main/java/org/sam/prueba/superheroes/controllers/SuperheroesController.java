@@ -3,6 +3,7 @@ package org.sam.prueba.superheroes.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import org.sam.prueba.common.exceptions.BusinessException;
 import org.sam.prueba.superheroes.config.SwaggerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.sam.prueba.superheroes.model.Superheroe;
@@ -70,7 +71,7 @@ public class SuperheroesController {
         if (service.create(heroe)) {
             return new ResponseEntity(heroe, HttpStatus.CREATED);
         }
-        throw new RuntimeException("No se ha podido añadir el héroe");
+        throw new BusinessException("No se ha podido añadir el héroe");
     }
 
     @PutMapping(value = "/", produces = "application/json" )
@@ -79,7 +80,7 @@ public class SuperheroesController {
         if (service.update(heroe)) {
             return ResponseEntity.ok(heroe);
         }
-        throw new RuntimeException("No se ha podido modificar el héroe");
+        throw new BusinessException("No se ha podido modificar el héroe");
     }
 
     @DeleteMapping(value = "/")
@@ -88,6 +89,6 @@ public class SuperheroesController {
         if (service.delete(heroeId)) {
             return ResponseEntity.ok().build();
         }
-        throw new RuntimeException("No se ha podido eliminar el héroe");
+        throw new BusinessException("No se ha podido eliminar el héroe");
     }
 }
