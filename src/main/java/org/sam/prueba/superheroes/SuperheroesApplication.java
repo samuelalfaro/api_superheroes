@@ -11,7 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
 @SpringBootApplication
-@Import(org.sam.prueba.common.exceptions.ExceptionHelper.class)
+@Import({org.sam.prueba.common.config.SpringAspectConfig.class
+        ,org.sam.prueba.common.exceptions.ExceptionHelper.class})
 @Configuration
 public class SuperheroesApplication implements WebMvcConfigurer {
 

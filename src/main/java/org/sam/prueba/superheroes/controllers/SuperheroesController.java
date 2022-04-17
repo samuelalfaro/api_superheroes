@@ -3,6 +3,7 @@ package org.sam.prueba.superheroes.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import org.sam.prueba.common.aspect.LogearTiempoEjecucion;
 import org.sam.prueba.common.exceptions.BusinessException;
 import org.sam.prueba.superheroes.config.SwaggerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class SuperheroesController {
 
     @GetMapping(value = "/{heroeId}", produces = "application/json")
     @ApiOperation(value = "Consultar un único súper héroe por id.")
+    @LogearTiempoEjecucion
     public ResponseEntity<Superheroe> find(@PathVariable("heroeId") long heroeId) {
         Superheroe dato = service.find(heroeId);
         if (dato != null) {
@@ -57,6 +59,7 @@ public class SuperheroesController {
             + " el valor de un parámetro enviado en la petición.\n"
             + "Por ejemplo, si enviamos “man” devolverá “Spiderman”,"
             + " “Superman”,“Manolito el fuerte”, etc")
+    @LogearTiempoEjecucion
     public ResponseEntity<List<Superheroe>> findByName(@RequestParam String name) {
         List<Superheroe> list = service.findByName(name);
         if (list != null && !list.isEmpty()) {
@@ -67,6 +70,7 @@ public class SuperheroesController {
 
     @PostMapping(value = "/", produces = "application/json" )
     @ApiOperation(value = "Añadir un súper héroe.")
+    @LogearTiempoEjecucion
     public ResponseEntity<Superheroe> create(Superheroe heroe) {
         if (service.create(heroe)) {
             return new ResponseEntity(heroe, HttpStatus.CREATED);
@@ -76,6 +80,7 @@ public class SuperheroesController {
 
     @PutMapping(value = "/", produces = "application/json" )
     @ApiOperation(value = "Modificar un súper héroe.")
+    @LogearTiempoEjecucion
     public ResponseEntity<Superheroe> update(Superheroe heroe) {
         if (service.update(heroe)) {
             return ResponseEntity.ok(heroe);
@@ -85,6 +90,7 @@ public class SuperheroesController {
 
     @DeleteMapping(value = "/")
     @ApiOperation(value = "Eliminar un súper héroe.")
+    @LogearTiempoEjecucion
     public ResponseEntity<?> delete(@RequestParam long heroeId) {
         if (service.delete(heroeId)) {
             return ResponseEntity.ok().build();
