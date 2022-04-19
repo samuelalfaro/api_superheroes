@@ -3,11 +3,11 @@ package org.sam.prueba.common.exceptions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 @ControllerAdvice(basePackages = {"org.sam.prueba.superheroes.controllers"})
 @ResponseBody
@@ -15,9 +15,9 @@ public class ExceptionHelper {
 
     private final static Logger logger = Logger.getLogger("org.sam.prueba.common.exceptions.ExceptionHelper");
 
-    @ExceptionHandler(value = {Unauthorized.class})
+    @ExceptionHandler(value = {AuthenticationException .class})
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
-    public ErrorMessage handleUnauthorizedException(Unauthorized ex) {
+    public ErrorMessage handleUnauthorizedException(AuthenticationException  ex) {
         logger.log(Level.SEVERE, "Unauthorized Exception: {0}", ex.getMessage());
         return new ErrorMessage(ex.getMessage());
     }

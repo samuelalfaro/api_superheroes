@@ -1,5 +1,7 @@
 package org.sam.prueba.superheroes.config;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.springframework.context.annotation.Bean;
@@ -13,6 +15,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.SecurityReference;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 
 @Configuration
 public class SwaggerConfig {
@@ -23,6 +29,25 @@ public class SwaggerConfig {
         return PathSelectors.regex("/api/superheroes.*");
     }
 
+    private static List<SecurityReference> defaultAuth() {
+        final AuthorizationScope[] scopes = {
+            new AuthorizationScope("global", "accessEverything")
+        };
+        return Collections.singletonList(new SecurityReference("APIKey", scopes));
+    }
+
+    private static SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .operationSelector(
+                    oc -> postPaths().test(oc.requestMappingPattern())
+                ).build();
+    }
+        
+    private ApiKey apiKey() {
+        return new ApiKey("APIKey", "APIKey", "header");
+    }
+    
     @Bean
     public Docket postApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -31,6 +56,8 @@ public class SwaggerConfig {
                 .paths(postPaths())
                 .build()
                 .tags(new Tag(TAG_1, "Operaciones típicas consulta/alta/baja/modificación"))
+                .securitySchemes(Collections.singletonList(apiKey()))
+                .securityContexts(Collections.singletonList(securityContext()))
                 .apiInfo(buildInfo());
     }
 
